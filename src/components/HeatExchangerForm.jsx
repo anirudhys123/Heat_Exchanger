@@ -171,7 +171,7 @@ export default function HeatExchangerForm() {
               </tbody>
             </Table>
             <p style={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#2e7d32' }}>
-              🔍 Average Heat Exchanger Efficiency: <strong>{avgEfficiency}%</strong>
+               Average Heat Exchanger Efficiency: <strong>{avgEfficiency}%</strong>
             </p>
           </div>
 
