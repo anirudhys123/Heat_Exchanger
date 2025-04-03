@@ -1,4 +1,4 @@
-
+/* Updated with dynamic efficiency, experimental PPT readings, graphs, and results table */
 
 import React, { useState } from "react";
 import { Table, Button, Row, Col, Card } from "react-bootstrap";
@@ -157,25 +157,53 @@ export default function HeatExchangerForm() {
       </div>
 
       {results.length > 0 && (
-        <div style={styles.card}>
-          <h3 style={styles.subheading}>Performance Graphs Based on All Readings</h3>
-          {avgEfficiency && (
-            <p style={{ fontSize: '1.1rem', fontWeight: '500', color: '#2e7d32', marginBottom: '20px', backgroundColor: '#e8f5e9', padding: '10px', borderRadius: '8px' }}>
-              ✅ Average Heat Exchanger Efficiency based on readings: <strong>{avgEfficiency}%</strong>
-            </p>
-          )}
-          <Row>
-            <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>Q vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("Q (kW)", "Q", "green")} options={chartOptions("Q (kW)")} /></div><p><strong>Conclusion:</strong> Higher mass flow rate leads to greater Q due to more thermal energy transfer.</p></Card.Body></Card></Col>
-            <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>LMTD vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("LMTD (°C)", "LMTD", "blue")} options={chartOptions("LMTD (°C)")} /></div><p><strong>Conclusion:</strong> LMTD variation shows temperature differential effectiveness under varying flow.</p></Card.Body></Card></Col>
-          </Row>
-          <Row>
-            <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>U vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("U (W/m²°C)", "U", "red")} options={chartOptions("U (W/m²°C)")} /></div><p><strong>Conclusion:</strong> U increases with flow indicating enhanced convective heat transfer.</p></Card.Body></Card></Col>
-            <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>Effectiveness vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("Effectiveness", "effectiveness", "orange")} options={chartOptions("Effectiveness")} /></div><p><strong>Conclusion:</strong> Effectiveness shows trade-off with increased flow as contact time reduces.</p></Card.Body></Card></Col>
-          </Row>
-          <Row>
-            <Col md={12}><Card style={styles.card}><Card.Body><Card.Title>Q Hot vs Q Cold</Card.Title><div style={styles.chart}><Bar data={barData} options={chartOptions("Q Comparison")} /></div><p><strong>Conclusion:</strong> Slight differences in Qh and Qc suggest minimal system losses due to radiation/conduction.</p></Card.Body></Card></Col>
-          </Row>
-        </div>
+        <>
+          <div style={styles.card}>
+            <h3 style={styles.subheading}>Results Table</h3>
+            <Table bordered responsive>
+              <thead>
+                <tr>
+                  <th>ṁ (kg/s)</th>
+                  <th>Q (W)</th>
+                  <th>U (W/m²°C)</th>
+                  <th>LMTD (°C)</th>
+                  <th>Effectiveness</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.map((r, idx) => (
+                  <tr key={idx}>
+                    <td>{r.m}</td>
+                    <td>{r.Q.toFixed(2)}</td>
+                    <td>{r.U.toFixed(2)}</td>
+                    <td>{r.LMTD.toFixed(2)}</td>
+                    <td>{r.effectiveness.toFixed(3)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            {avgEfficiency && (
+              <p style={{ fontSize: '1.1rem', fontWeight: '500', color: '#2e7d32', marginBottom: '20px', backgroundColor: '#e8f5e9', padding: '10px', borderRadius: '8px' }}>
+                ✅ Average Heat Exchanger Efficiency based on readings: <strong>{avgEfficiency}%</strong>
+              </p>
+            )}
+          </div>
+
+          <div style={styles.card}>
+            <h3 style={styles.subheading}>Performance Graphs Based on All Readings</h3>
+            <Row>
+              <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>Q vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("Q (kW)", "Q", "green")} options={chartOptions("Q (kW)")} /></div><p><strong>Conclusion:</strong> Higher mass flow rate leads to greater Q due to more thermal energy transfer.</p></Card.Body></Card></Col>
+              <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>LMTD vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("LMTD (°C)", "LMTD", "blue")} options={chartOptions("LMTD (°C)")} /></div><p><strong>Conclusion:</strong> LMTD variation shows temperature differential effectiveness under varying flow.</p></Card.Body></Card></Col>
+            </Row>
+            <Row>
+              <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>U vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("U (W/m²°C)", "U", "red")} options={chartOptions("U (W/m²°C)")} /></div><p><strong>Conclusion:</strong> U increases with flow indicating enhanced convective heat transfer.</p></Card.Body></Card></Col>
+              <Col md={6}><Card style={styles.card}><Card.Body><Card.Title>Effectiveness vs ṁ</Card.Title><div style={styles.chart}><Line data={chartData("Effectiveness", "effectiveness", "orange")} options={chartOptions("Effectiveness")} /></div><p><strong>Conclusion:</strong> Effectiveness shows trade-off with increased flow as contact time reduces.</p></Card.Body></Card></Col>
+            </Row>
+            <Row>
+              <Col md={12}><Card style={styles.card}><Card.Body><Card.Title>Q Hot vs Q Cold</Card.Title><div style={styles.chart}><Bar data={barData} options={chartOptions("Q Comparison")} /></div><p><strong>Conclusion:</strong> Slight differences in Qh and Qc suggest minimal system losses due to radiation/conduction.</p></Card.Body></Card></Col>
+            </Row>
+          </div>
+        </>
       )}
     </div>
   );
