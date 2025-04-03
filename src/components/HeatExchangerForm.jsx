@@ -28,7 +28,7 @@ ChartJS.register(
 export default function HeatExchangerForm() {
   const cp = 4187;
   const [readings, setReadings] = useState([
-    { mh: 0.22, mc: 0.19, Th_in: 75, Th_out: 67, Tc_in: 20, Tc_out: 29 },
+    { mh: 0.19, mc: 0.22, Th_in: 75, Th_out: 67, Tc_in: 20, Tc_out: 29 },
     { mh: 0.25, mc: 0.20, Th_in: 85, Th_out: 70, Tc_in: 30, Tc_out: 50 },
     { mh: 0.30, mc: 0.22, Th_in: 90, Th_out: 75, Tc_in: 35, Tc_out: 55 },
   ]);
